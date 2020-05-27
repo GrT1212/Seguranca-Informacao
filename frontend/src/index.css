@@ -1,0 +1,17 @@
+body {
+  text-align: center;
+  margin: 10%;
+  font-size: 20px;
+}
+
+.logout-button {
+  position: absolute;
+  right: 30px;
+  top: 30px;
+}
+
+.account-device-row-input {
+  width: 100px;
+  height: 20px;
+  margin-right: 15px;
+}
