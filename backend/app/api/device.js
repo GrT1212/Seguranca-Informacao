@@ -7,14 +7,15 @@ const { authenticatedAccount } = require('./helper');
 
 const router = new Router();
 
-router.get('/new', (req, res, next) => {
+router.post('/new', (req, res, next) => {
   let accountId, device;
+  const { macAddress, nickname } = req.body;
 
   authenticatedAccount({ sessionString: req.cookies.sessionString })
     .then(({ account }) => {
       accountId = account.id;
 
-      device = new Device({ accountId });
+      device = new Device({ macAddress, nickname });
 
       return DeviceTable.storeDevice(device);
     })
