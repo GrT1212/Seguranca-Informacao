@@ -33,7 +33,7 @@ class AccountDeviceTable {
   static getDeviceAccount({ deviceId }) {
     return new Promise((resolve, reject) => {
       pool.query(
-        'SELECT "accountId" FROM accountDevice WHERE "deviceId" = $1',
+        'SELECT "accountId" FROM accountDevice_tbl WHERE "deviceId" = $1',
         [deviceId],
         (error, response) => {
           if (error) return reject(error);
@@ -47,7 +47,7 @@ class AccountDeviceTable {
   static updateAccountDevice({ deviceId, accountId }) {
     return new Promise((resolve, reject) => {
       pool.query(
-        'UPDATE accountDevice SET "accountId" = $1 WHERE "deviceId" = $2',
+        'UPDATE accountDevice_tbl SET "accountId" = $1 WHERE "deviceId" = $2',
         [accountId, deviceId],
         (error, response) => {
           if (error) return reject(error);
