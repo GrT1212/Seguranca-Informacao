@@ -38,6 +38,23 @@ class DeviceTable {
         });
     }
 
+    static getPortDevice({ deviceId }) {
+        return new Promise((resolve, reject)=> {
+            pool.query(
+                `SELECT "macAddress", nickname
+                 FROM device_tbl
+                 WHERE device_tbl.id = $1`,
+                 [deviceId],
+                 (error, response) => {
+                     if (error) return reject(error);
+
+                     if (response.rows.length === 0) return reject(new Error('no device'));
+                     resolve(response.rows[0]);
+                 }
+            )
+        });
+    }
+
     static updateDevice({ deviceId, macAddress, nickname, status }) { 
         const settingsMap = { macAddress, nickname, status };
     
