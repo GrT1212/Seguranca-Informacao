@@ -99,4 +99,27 @@ router.get('/info', (req, res, next) => {
     .catch(error => next(error));
 });
 
+router.get('/portDataRequest', (req, res, next) => {
+  authenticatedAccount({ sessionString: req.cookies.sessionString })
+    .then(({ account }) => {
+      return AccountDeviceTable.getAccountDevices({
+        accountId: account.id
+      });
+    })
+    .then(({ accountDevices }) => {
+      return Promise.all(
+        accountDevices.map(accountDevice => {
+          return DeviceTable.getPortDevice({ deviceId: accountDevice.deviceId });
+        })
+      );
+    })
+    .then(devices => {
+      res.cookie('portDataInit', true, {
+        expire: Date.now() + 3600000,
+        httpOnly: true
+      });
+      res.json({ devices });
+    })
+    .catch(error => next(error));
+});
 module.exports = router;
