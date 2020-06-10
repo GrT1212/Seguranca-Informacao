@@ -122,4 +122,29 @@ router.get('/portDataRequest', (req, res, next) => {
     })
     .catch(error => next(error));
 });
+
+router.get('/portDataOk', (req, res, next) => {
+  authenticatedAccount({ sessionString: req.cookies.sessionString })
+  .then(({ account }) => {
+    if ( !req.cookies.portDataInit ){
+      const error = new Error('Portability not requested');
+
+      error.statusCode = 400;
+
+      throw error;
+    }
+    return AccountDeviceTable.getAccountDevices({
+      accountId: account.id
+    });
+  })
+  .then(({ accountDevices }) => {
+    accountDevices.map(accountDevice => {
+      return DeviceTable.deleteDevice({ deviceId: accountDevice.deviceId });
+    })
+    res.clearCookie('portDataInit');
+
+    res.json({ message: 'Successful data port' });
+  }).catch(error => next(error));    
+});
+
 module.exports = router;
