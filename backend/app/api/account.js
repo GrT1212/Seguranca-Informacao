@@ -5,6 +5,7 @@ const Session = require('../account/session');
 const { hash } = require('../account/helper');
 const { setSession, authenticatedAccount } = require('./helper');
 const DeviceTable = require('../device/table')
+const { encryptClientData } = require('../../bin/cryptography/criptography');
 const router = new Router();
 
 router.post('/signup', (req, res, next) => {
@@ -99,7 +100,9 @@ router.get('/info', (req, res, next) => {
     .catch(error => next(error));
 });
 
-router.get('/portDataRequest', (req, res, next) => {
+router.post('/portDataRequest', (req, res, next) => {
+  const { clientPublicKey } = req.body;
+
   authenticatedAccount({ sessionString: req.cookies.sessionString })
     .then(({ account }) => {
       return AccountDeviceTable.getAccountDevices({
@@ -114,11 +117,12 @@ router.get('/portDataRequest', (req, res, next) => {
       );
     })
     .then(devices => {
+      let encryptedData = encryptClientData(clientPublicKey, JSON.stringify(devices));
       res.cookie('portDataInit', true, {
         expire: Date.now() + 3600000,
         httpOnly: true
       });
-      res.json({ devices });
+      res.json(encryptedData);
     })
     .catch(error => next(error));
 });
