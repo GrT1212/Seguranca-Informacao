@@ -18,8 +18,8 @@ Portabilidade de dados
 
 - [<img src="img/logo_postgresql.png" height=40px>](https://www.postgresql.org/) PostgreSQL
 
-# Sprint 2: Rotas para requisitar portabilidade dos dados
-Nessa sprint foram definidas duas rotas, uma para requisitar a portabilidade dos dados e outra para indicar que a operação ocorreu com sucesso. O diagrama a seguir demonstra a sequência de eventos entre as aplicações.
+# Sprint 4: Rotas para requisitar portabilidade dos dados e criptografia
+Nessa sprint foram definidas duas rotas, uma para requisitar a portabilidade dos dados e outra para indicar que a operação ocorreu com sucesso. Além das rotas, também foi implementado a criptografia dos dados sendo portados. O diagrama a seguir demonstra a sequência de eventos entre as aplicações.
 
 <img src="img/diag_seq.png" height=300px>
 
@@ -31,8 +31,11 @@ Para as demonstrações, foi utilizado o software Postman [<img src="img/logo_po
 ## 1. Mostrando os dados dos dispositivos
 <img src="img/devices.gif">
 
-## 2. Requisitando a portabilidade e recebendo um JSON com os dados
+## 2. Requisitando a portabilidade, enviando a chave pública e recebendo um JSON com os dados criptografados
 <img src="img/port_request.gif">
 
-## 3. Sinalizando que a operação occorreu com sucesso e apagando os dados do banco
+## 3. Descriptografando os dados
+<img src="img/crypto_ok.gif">
+
+## 4. Sinalizando que a operação occorreu com sucesso e apagando os dados do banco
 <img src="img/port_ok.gif">
