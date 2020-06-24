@@ -1,27 +1,27 @@
 const pool = require('../../databasePool');
+const { response } = require('..');
 
 class AccountTable {
-  static storeAccount({ usernameHash, passwordHash }) {
+  static storeAccount({ userId, username }) {
     return new Promise((resolve, reject) => {
       pool.query(
-        `INSERT INTO account_tbl("usernameHash", "passwordHash")
-         VALUES($1, $2)`,
-        [usernameHash, passwordHash],
+        `INSERT INTO account_tbl("userId", username)
+         VALUES($1, $2) RETURNING *`,
+        [userId, username],
         (error, response) => {
           if (error) return reject(error);
-
-          resolve();
+          resolve(response.rows[0]);
         }
       );
     });
   }
 
-  static getAccount({ usernameHash }) {
+  static getAccount({ userId }) {
     return new Promise((resolve, reject) => {
       pool.query(
-        `SELECT id, "passwordHash", "sessionId" FROM account_tbl
-         WHERE "usernameHash" = $1`,
-        [usernameHash],
+        `SELECT * FROM account_tbl
+         WHERE "userId" = $1`,
+        [userId],
         (error, response) => {
           if (error) return reject(error);
 
@@ -31,19 +31,6 @@ class AccountTable {
     });
   }
 
-  static updateSessionId({ sessionId, usernameHash }) {
-    return new Promise((resolve, reject) => {
-      pool.query(
-        'UPDATE account_tbl SET "sessionId" = $1 WHERE "usernameHash" = $2',
-        [sessionId, usernameHash],
-        (error, response) => {
-          if (error) return reject(error);
-
-          resolve();
-        }
-      )
-    });
-  }
 }
 
 module.exports = AccountTable;

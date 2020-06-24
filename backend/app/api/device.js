@@ -7,27 +7,19 @@ const { authenticatedAccount } = require('./helper');
 
 const router = new Router();
 
-router.post('/new', (req, res, next) => {
+router.post('/new', authenticatedAccount, (req, res, next) => {
   let accountId, device;
   const { macAddress, nickname } = req.body;
-
-  authenticatedAccount({ sessionString: req.cookies.sessionString })
-    .then(({ account }) => {
-      accountId = account.id;
-
-      device = new Device({ macAddress, nickname });
-
-      return DeviceTable.storeDevice(device);
-    })
-    .then(({ deviceId }) => {
-      device.deviceId = deviceId;
-
-      console.log('resolved deviceId', deviceId);
-
-      return AccountDeviceTable.storeAccountDevice({ accountId, deviceId });
-    })
-    .then(() => res.json({ device }))
-    .catch(error => next(error));
+  accountId = req.user.id;
+  device = new Device({ macAddress, nickname });
+  return DeviceTable.storeDevice(device)
+  .then(({ deviceId }) => {
+    device.deviceId = deviceId;
+    console.log('resolved deviceId', deviceId);
+    return AccountDeviceTable.storeAccountDevice({ accountId, deviceId });
+  })
+  .then(() => res.json({ device }))
+  .catch(error => next(error));
 });
 
 router.put('/update', (req, res, next) => {
