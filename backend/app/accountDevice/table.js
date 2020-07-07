@@ -30,6 +30,19 @@ class AccountDeviceTable {
     })
   }
 
+  static getAccountDevicesForPort({ accountUserId }) {
+    return new Promise((resolve, reject) => {
+      pool.query(
+        'SELECT "deviceId" FROM accountDevice_tbl WHERE "accountId" IN (SELECT id FROM account_tbl where "userId" = $1)',
+        [accountUserId],
+        (error, response) => {
+          if (error) return reject(error);
+          resolve({ accountDevices: response.rows });
+        }
+      )
+    })
+  }
+
   static getDeviceAccount({ deviceId }) {
     return new Promise((resolve, reject) => {
       pool.query(
