@@ -5,10 +5,15 @@ const DAYS = HOURS * 24;
 
 const REFRESH_RATE = 5; // units
 
+const FRONTEND = {
+  ADDRESS: 'http://localhost:1234'
+};
+
 module.exports = {
   SECONDS,
   MINUTES,
   HOURS,
   DAYS,
-  REFRESH_RATE
+  REFRESH_RATE,
+  FRONTEND
 };
