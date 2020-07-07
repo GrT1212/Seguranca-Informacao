@@ -23,7 +23,6 @@ class AccountDeviceTable {
         (error, response) => {
           if (error) return reject(error);
 
-          console.log('resolved devices', response.rows);
           resolve({ accountDevices: response.rows });
         }
       )
