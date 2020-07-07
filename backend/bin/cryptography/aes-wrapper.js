@@ -4,7 +4,6 @@ const aesWrapper = {};
 
 // get list of supportable encryption algorithms
 aesWrapper.getAlgorithmList = () => {
-    console.log(crypto.getCiphers());
 };
 
 aesWrapper.generateKey = () => {
@@ -33,6 +32,16 @@ aesWrapper.encrypt = (key, iv, text) => {
     encrypted += cipher.final('base64');
 
     return encrypted;
+};
+
+aesWrapper.decrypt = (key, text) => {
+    let dec = '';
+    let data = aesWrapper.separateVectorFromData(text);
+    let cipher = crypto.createDecipheriv('aes-256-cbc', key,  Buffer.from(data.iv, 'base64'));
+    dec += cipher.update(Buffer.from(data.message, 'base64'), 'base64', 'utf8');
+    dec += cipher.final('utf8');
+
+    return dec;
 };
 
 // add initialization vector to message
