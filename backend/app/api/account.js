@@ -12,6 +12,14 @@ router.get('/logout', authenticatedAccount, (req, res, next) => {
   res.json({ message: 'Logout successful' });
 });
 
+router.get('/authenticated', (req, res, next) => {
+  if (!req.user) {
+    res.json({});
+  } else {
+    res.json({ authenticated: true });
+  }
+});
+
 router.get('/devices', authenticatedAccount, (req, res, next) => {
   AccountDeviceTable.getAccountDevices({
       accountId: req.user.id
