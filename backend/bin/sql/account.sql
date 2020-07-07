@@ -1,5 +1,5 @@
 CREATE TABLE account_tbl(
   id             SERIAL PRIMARY KEY,
-  "userId"       CHARACTER(64),
-  username       CHARACTER(64)
+  "userId"       VARCHAR(64),
+  username       VARCHAR(64)
 );
