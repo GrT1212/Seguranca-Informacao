@@ -10,10 +10,11 @@ const passportSetup = require('../bin/oauth/passport-setup');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
 const keys = require('../secrets/keys');
+const { FRONTEND } = require('../app/config');
 
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:1234', credentials: true }));
+app.use(cors({ origin: FRONTEND.ADDRESS, credentials: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cookieSession({
