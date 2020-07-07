@@ -16,7 +16,7 @@ class AccountTable {
     });
   }
 
-  static getAccount({ userId }) {
+  static getAccount( userId ) {
     return new Promise((resolve, reject) => {
       pool.query(
         `SELECT * FROM account_tbl
@@ -25,12 +25,11 @@ class AccountTable {
         (error, response) => {
           if (error) return reject(error);
 
-          resolve({ account: response.rows[0] });
+          resolve(response.rows[0]);
         }
       )
     });
   }
-
 }
 
 module.exports = AccountTable;
