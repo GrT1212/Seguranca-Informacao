@@ -15,7 +15,6 @@ router.post('/new', authenticatedAccount, (req, res, next) => {
   return DeviceTable.storeDevice(device)
   .then(({ deviceId }) => {
     device.deviceId = deviceId;
-    console.log('resolved deviceId', deviceId);
     return AccountDeviceTable.storeAccountDevice({ accountId, deviceId });
   })
   .then(() => res.json({ device }))
@@ -24,7 +23,6 @@ router.post('/new', authenticatedAccount, (req, res, next) => {
 
 router.put('/update', (req, res, next) => {
   const { deviceId, macAddress, nickname, status } = req.body;
-  console.log('ok');
   DeviceTable.updateDevice({ deviceId, macAddress, nickname, status })
     .then(() => res.json({ message: 'successfully updated device' }))
     .catch(error => next(error));
