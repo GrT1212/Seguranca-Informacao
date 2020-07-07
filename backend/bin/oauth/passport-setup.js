@@ -5,7 +5,7 @@ const AccountTable = require('../../app/account/table');
 const { hash } = require('../../app/account/helper');
 
 passport.serializeUser((user, done) => {
-    done(null, user.id)
+    done(null, user.userId);
 });
 
 passport.deserializeUser((id, done) => {
@@ -20,12 +20,12 @@ passport.use(
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret
     }, ( accessToken, refreshToken, profile, done ) => {
-        AccountTable.getAccount({ userId: hash(profile.id) })
-        .then(({ account }) => {
+        AccountTable.getAccount(profile.id)
+        .then((account) => {
             if (account != undefined) {
                 done(null, account);
             } else {
-                AccountTable.storeAccount({ userId: hash(profile.id), username: profile.displayName })
+                AccountTable.storeAccount({ userId: profile.id, username: profile.displayName })
                 .then((newAccount) => {
                     done(null, newAccount);
                 });
