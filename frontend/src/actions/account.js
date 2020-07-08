@@ -1,5 +1,5 @@
 import { ACCOUNT } from './types';
-import { BACKEND } from '../config';
+import { BACKEND, SECOND_APP } from '../config';
 
 export const fetchFromAccount = ({
   endpoint,
@@ -42,4 +42,17 @@ export const fetchAuthenticated = () => fetchFromAccount({
   FETCH_TYPE: ACCOUNT.FETCH,
   ERROR_TYPE: ACCOUNT.FETCH_ERROR,
   SUCCESS_TYPE: ACCOUNT.FETCH_AUTHENTICATED_SUCCESS
+});
+
+export const fetchDataPortability = ({ reqId }) => fetchFromAccount({
+  endpoint: 'requestPortData',
+  options: {
+    method: 'POST',
+    body: JSON.stringify({ appURL: `${SECOND_APP.ADDRESS}`, id: reqId }),
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include'
+  },
+  FETCH_TYPE: ACCOUNT.FETCH,
+  ERROR_TYPE: ACCOUNT.FETCH_ERROR,
+  SUCCESS_TYPE: ACCOUNT.FETCH_SUCCESS
 });
