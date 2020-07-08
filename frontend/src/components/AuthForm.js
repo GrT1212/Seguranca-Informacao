@@ -1,34 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Button, FormGroup, FormControl } from 'react-bootstrap';
-import { signup, login } from '../actions/account';
+import { login } from '../actions/account';
 import fetchStates from '../reducers/fetchStates';
+import { GoogleIcon } from '../assets/index';
 
 class AuthForm extends Component {
-  state = { username: '', password: '', buttonClicked: false };
-
-  updateUsername = event => {
-    this.setState({ username: event.target.value });
-  }
-
-  updatePassword = event => {
-    this.setState({ password: event.target.value });
-  }
-
-  signup = () => {
-    this.setState({ buttonClicked: true });
-
-    const { username, password } = this.state;
-
-    this.props.signup({ username, password });
-  }
+  state = { buttonClicked: false };
 
   login = () => {
     this.setState({ buttonClicked: true });
-
-    const { username, password } = this.state;
-
-    this.props.login({ username, password });
+    this.props.login();
   }
 
   get Error() {
@@ -43,27 +24,12 @@ class AuthForm extends Component {
   render() {
     return (
       <div>
-        <h2>LGPD</h2>
-        <FormGroup>
-          <FormControl
-            type='text'
-            value={this.state.username}
-            placeholder='username'
-            onChange={this.updateUsername}
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormControl
-            type='password'
-            value={this.state.password}
-            placeholder='password'
-            onChange={this.updatePassword}
-          />
-        </FormGroup>
-        <div>
-          <Button onClick={this.login}>Log In</Button>
-          <span> or </span>
-          <Button onClick={this.signup}>Sign Up</Button>
+        <div id="auth-form">
+          <h2>LGPD</h2>
+          <a className="login" href="#" onClick={this.login}>
+            <GoogleIcon />
+            Log In
+          </a>
         </div>
         <br />
         {this.Error}
@@ -74,5 +40,5 @@ class AuthForm extends Component {
 
 export default connect(
   ({ account }) => ({ account }),
-  { signup, login }
+  { login }
 )(AuthForm);

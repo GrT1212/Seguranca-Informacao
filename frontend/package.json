@@ -12,13 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@svgr/parcel-plugin-svgr": "^5.4.0",
     "history": "^4.7.2",
-    "react": "^16.4.2",
-    "react-bootstrap": "^0.32.1",
-    "react-dom": "^16.2.0",
+    "parcel-bundler": "^1.12.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-transition-group": "^4.4.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0"
   },
