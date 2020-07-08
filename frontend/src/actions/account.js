@@ -24,18 +24,9 @@ export const fetchFromAccount = ({
     }));
 }
 
-export const login = ({ username, password }) => fetchFromAccount({
-  endpoint: 'login',
-  options: {
-    method: 'POST',
-    body: JSON.stringify({ username, password }),
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'include'
-  },
-  FETCH_TYPE: ACCOUNT.FETCH,
-  ERROR_TYPE: ACCOUNT.FETCH_ERROR,
-  SUCCESS_TYPE: ACCOUNT.FETCH_SUCCESS
-});
+export const login = () => {
+  window.location = `${BACKEND.ADDRESS}/auth/google`;
+}
 
 export const logout = () => fetchFromAccount({
   endpoint: 'logout',
