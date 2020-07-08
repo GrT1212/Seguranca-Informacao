@@ -45,6 +45,24 @@ class AccountDeviceRow extends Component {
       .catch(error => alert(error.message));
   }
 
+  delete = () => {
+    fetch(`${BACKEND.ADDRESS}/device/delete`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        deviceId: this.props.device.id
+      })
+    }).then(response => response.json())
+      .then(json => {
+        if (json.type === 'error') {
+          alert(json.message);
+        } else {
+          window.location.reload(false);
+        }
+      })
+      .catch(error => alert(error.message));
+  }
+
   get SaveButton() {
     return <Button onClick={this.save}>Save</Button>;
   }
@@ -56,6 +74,10 @@ class AccountDeviceRow extends Component {
   render() {
     return (
       <div>
+        <img src={dev_ico} />
+        <br />
+        <br />
+        Nickname:{' '}
         <input
           type='text'
           value={this.state.nickname}
@@ -63,21 +85,23 @@ class AccountDeviceRow extends Component {
           disabled={!this.state.edit}
         />
         <br />
-        <img src={dev_ico} />
         <div>
           <span>
-            MAC Address:{' '}
+            MAC Addr:{' '}
             <input
               type='text'
               disabled={!this.state.edit}
               value={this.state.macAddress}
               onChange={this.updateMacValue}
-              className='account-device-row-input'
             />
-          </span>{' '}
+          </span>
+          <br />
+          <br />
           {
             this.state.edit ? this.SaveButton : this.EditButton
           }
+          {' '}
+          <a href="#" onClick={this.delete}>Delete</a>
         </div>
       </div>
     )
