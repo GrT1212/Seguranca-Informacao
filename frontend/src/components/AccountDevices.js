@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { fetchAccountDevices } from '../actions/accountDevices';
 import AccountDeviceRow from './AccountDeviceRow';
+import Device from './Device';
+import Navbar from './Navbar';
 
 class AccountDevices extends Component {
   componentDidMount() {
@@ -12,7 +13,13 @@ class AccountDevices extends Component {
   render() {
     return (
       <div>
-        <h3>Account Devices</h3>
+        <Navbar></Navbar>
+        <br />
+        <br />
+        <hr />
+        <Device />
+        <hr />
+        <h3>Dispositivos na conta</h3>
         {
           this.props.accountDevices.devices.map(device => {
             return (
@@ -23,7 +30,6 @@ class AccountDevices extends Component {
             )
           })
         }
-        <Link to='/'>Home</Link>
       </div>
     );
   }
