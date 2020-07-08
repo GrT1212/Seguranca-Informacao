@@ -4,14 +4,27 @@ body {
   font-size: 20px;
 }
 
-.logout-button {
-  position: absolute;
-  right: 30px;
-  top: 30px;
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.account-device-row-input {
-  width: 100px;
-  height: 20px;
-  margin-right: 15px;
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.navigation ul li svg { 
+  fill: var(--text-color);
+  width: 2rem;
+  height: auto;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+}
+
+.login svg { 
+  width: 3rem;
+  height: auto;
+  margin-right: 0.5rem;
 }
